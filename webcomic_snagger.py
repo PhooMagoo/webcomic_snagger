@@ -21,6 +21,16 @@ comic_name = r''
 folder = input(r'Where are we saving the images? ')
 os.chdir(folder)  # Change our working directory to the specified folder.
 
+print('Where do you have chromedriver.exe stored?')
+chromedir = input(r'> ')
+
+# Check to see if we have chromedriver.exe in the folder (for navigating the site).
+for root, dirs, files in os.walk(folder):
+    if os.path.isfile('chromedriver.exe'):
+        break
+    else:  # If we don't, we'll copy the version that's in my Code directory.
+        shutil.copy(chromedir + r'\chromedriver.exe', folder)
+
 # Request the site's URL on the page you want to start.
 start_url = input(r'What page are we starting on? ')
 
