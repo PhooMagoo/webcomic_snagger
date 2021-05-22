@@ -1,13 +1,8 @@
 ### Recursively download webcomics from newest to oldest.
-
-# TODO: I don't think anything? Works like I want.
+### NEEDS CHROMEDRIVER IN THE FOLDER WE'RE DOWNLOADING TO!!!
 
 from selenium import webdriver
 import bs4, os, requests, webbrowser, shutil
-
-# VARIABLES:
-# folder | start_url | comic_container | back_button  | naming_convention
-# choice | comic_url | comic_name
 
 #####################################################
 
@@ -24,14 +19,7 @@ comic_name = r''
 
 # Request the folder the user would like to save to.
 folder = input(r'Where are we saving the images? ')
-os.chdir(folder) # Change our working directory to the specified folder.
-
-# Check to see if we have chromedriver.exe in the folder (for navigating the site).
-for root, dirs, files in os.walk(folder):
-    if os.path.isfile('chromedriver.exe') == True:
-        break
-    else: # If we don't, we'll copy the version that's in my Code directory.
-        shutil.copy(r'C:\Users\PhooM\Desktop\Code\Scripts\Python\chromedriver.exe', folder)
+os.chdir(folder)  # Change our working directory to the specified folder.
 
 # Request the site's URL on the page you want to start.
 start_url = input(r'What page are we starting on? ')
@@ -76,13 +64,10 @@ while True:
         comic = browser.find_element_by_css_selector(comic_container)
         back = browser.find_element_by_css_selector(back_button)
 
-        ## We find the first image, which should be the comic.
-        #images = soup.find('a > img')
-
         comic_url = comic.get_attribute('src')
 
         print('We got the comic URL.')
-    
+
         # Process how we're going to name these files.
         if choice == 0:
             name = comic_url.split('/')[-1]
@@ -105,6 +90,6 @@ while True:
         back.click()
 
         continue
-        
+
     except Exception as e:
         print(e)
